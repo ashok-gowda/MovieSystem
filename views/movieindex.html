@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="js/movieindex.js"></script>
   </head>
-  <body ng-app="movieIndexApp"  ng-controller="movieIndexController" ng-init="value=0">
+  <body ng-app="myApp" ng-controller="myController" >
   <nav class="navbar navbar-default">
   <div class="container-fluid">
   <div class="navbar-header">
@@ -60,7 +60,7 @@
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" ng-model="searchValue">
         <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
+          <button class="btn btn-default" type="submit" ng-click="clickSearchButton(searchValue)">
             <i class="glyphicon glyphicon-search"></i>
           </button>
         </div>
