@@ -1,6 +1,6 @@
 CREATE DATABASE theatre;
 Use theatre;
-CREATE TABLE MOVIE(
+CREATE TABLE movie(
  id INT(10) NOT NULL AUTO_INCREMENT,
  title varchar(255) NOT NULL,
  rated varchar(255) DEFAULT NULL,
@@ -10,17 +10,18 @@ CREATE TABLE MOVIE(
  Poster   varchar(255) DEFAULT NULL,
  Primary key(id)
 );
-ALTER TABLE Movie DROP COLUMN Poster;
-ALTER TABLE Movie ADD COLUMN poster TEXT;
-ALTER TABLE MOVIE ADD COLUMN description TEXT;
+ALTER TABLE movie DROP COLUMN Poster;
+ALTER TABLE movie ADD COLUMN poster TEXT;
+ALTER TABLE movie ADD COLUMN description TEXT;
+ALTER TABLE movie ADD COLUMN releaseDate datetime;
 
-CREATE TABLE Genre(
+CREATE TABLE genre(
 	id INT(10) NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     Primary key(id)
 );
 
-CREATE TABLE Actor(
+CREATE TABLE actor(
 	id INT(10)NOT NULL auto_increment,
     name varchar(255) NOT NULL,
     Primary key(id)
