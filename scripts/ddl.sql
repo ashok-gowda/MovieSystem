@@ -63,5 +63,13 @@ CREATE TABLE users(
     Primary key (id)
     );
    
-   
+CREATE TABLE movie_ratings(
+	id INT(10) NOT NULL AUTO_INCREMENT,
+    user_id INT(10) NOT NULL,
+    movie_id INT(10) NOT NULL,
+    comment  TEXT,
+    rating INT(10) NOT NULL,
+    Primary key(id),
+    foreign key(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE);
    

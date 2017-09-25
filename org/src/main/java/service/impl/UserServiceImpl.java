@@ -15,4 +15,14 @@ public class UserServiceImpl implements IUserService {
 		return userDao.validateUser(username, password);
 	}
 
+	@Override
+	public boolean validateUserName(String username) {
+		return userDao.validateUserName(username);
+	}
+
+	@Override
+	public Integer getUserIdFromUsername(String username) {
+		return userDao.getUserIdFromUserName(username);
+	}
+
 }

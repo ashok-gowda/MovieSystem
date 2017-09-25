@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.List;
 
 import javax.sql.DataSource;
+import model.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -97,6 +98,99 @@ public class MovieDaoImpl implements IMovieDao {
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {actor});
 		return getListOfMoviesFromRows(rows);
 	}
+
+
+
+	@Override
+	public Movie getMovieInformationById(String id) {
+		String sql="Select * from movie where id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> listOfRows=template.queryForList(sql,new Object[] {id});
+		Movie movie=new Movie();
+	    if(listOfRows.size()>0) {
+	    	Map<String,Object> row=listOfRows.get(0);
+	    	movie.setId((Integer)row.get("id"));
+			movie.setLanguage((String)row.get("lang"));
+			movie.setDescription((String)row.get("description"));
+			movie.setPoster((String)row.get("poster"));
+			movie.setRated((String)row.get("rated"));
+			movie.setTitle((String)row.get("title"));
+			movie.setRuntime((String) row.get("runtime"));
+			movie.setReleaseDate((Date)row.get("releaseDate"));
+	    }
+	    return movie;
+	}
+
+
+
+	@Override
+	public List<Comment> getMovieCommentsByMovieId(String movieId) {
+		String sql="Select users.username,movie_ratings.comment,movie_ratings.rating "
+				+ " from movie_ratings,users where movie_ratings.user_id=users.id and movie_ratings.movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {movieId});
+		List<Comment> listOfComments=new ArrayList<Comment>();
+		for(Map<String,Object> row:rows) {
+			Comment comment=new Comment();
+			comment.setUsername((String)row.get("username"));
+			comment.setComment((String)row.get("comment"));
+			comment.setRating((Integer)row.get("rating"));
+			listOfComments.add(comment);
+		}
+		return listOfComments;
+	}
+
+
+
+	@Override
+	public List<String> getGenresOfMovieById(String movieId) {
+		String sql="Select genre.name from genre,movie_genre where genre.id=movie_genre.genre_id and movie_genre.movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {movieId});
+		List<String> genreList=new ArrayList<String>();
+		for(Map<String,Object>row:rows) {
+			genreList.add((String)row.get("name"));
+		}
+		return genreList;
+	}
+
+
+
+	@Override
+	public List<String> getActorsOfMovieByMovieId(String movieId) {
+		String sql="Select actor.name from actor,movie_actor where actor.id=movie_actor.actor_id and movie_actor.movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {movieId});
+		List<String> actorList=new ArrayList<String>();
+		for(Map<String,Object>row:rows) {
+			actorList.add((String)row.get("name"));
+		}
+		return actorList;
+	}
+
+
+
+	@Override
+	public void insertCommentsAndRatings(String userId, String movieId, String comment, String rating) {
+		String sql="Insert into movie_ratings(user_id,movie_id,comment,rating) VALUES(?,?,?,?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {userId,movieId,comment,rating});
+	}
+
+
+
+	@Override
+	public boolean checkIfMovieIdisValid(String movieId) {
+		String sql="Select count(*) from movie where id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		Integer rowCount=template.queryForObject(sql,new Object[] {movieId},Integer.class);
+		if(rowCount==1) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	
 
 }

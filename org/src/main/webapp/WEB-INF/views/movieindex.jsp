@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/resources/js/movieindex.js"></script>
   </head>
-  <body ng-app="myApp" ng-controller="myController" >
+  <body ng-app="myApp" ng-controller="myController" ng-init="initValues('${username}')" >
   <nav class="navbar navbar-default">
   <div class="container-fluid">
   <div class="navbar-header">
@@ -95,7 +95,7 @@
   <div ng-repeat="movie in listOfMovies" ng-if="$index % 3 == 0" class="row">
     <div class="col-sm-4">
       <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
+      <a href={{listOfMovies[$index].url}}>
         <img src={{listOfMovies[$index].poster}} alt={{listOfMovies[$index].poster}} >
         <div class="caption">
           <p>{{listOfMovies[$index].title}}</p>
@@ -105,7 +105,7 @@
     </div>
     <div class="col-sm-4" ng-if="listOfMovies.length > ($index + 1)">
       <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
+      <a href={{listOfMovies[$index+1].url}}>
         <img src={{listOfMovies[$index+1].poster}} alt={{listOfMovies[$index+1].poster}} >
         <div class="caption">
           <p>{{listOfMovies[$index+1].title}}</p>
@@ -115,7 +115,7 @@
     </div>
     <div class="col-sm-4" ng-if="listOfMovies.length > ($index + 2)">
       <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
+      <a href={{listOfMovies[$index+2].url}}>
         <img src={{listOfMovies[$index+2].poster}} alt={{listOfMovies[$index+2].poster}} >
         <div class="caption">
           <p>{{listOfMovies[$index+2].title}}</p>

@@ -34,5 +34,30 @@ public class UserDaoImpl implements UserDao {
 		}
 		return false;
 	}
+	
+	public boolean validateUserName(String username) {
+		jdbcTemplate = new JdbcTemplate(datasource);
+		String sql="Select count(*) from users where username=?";
+		Integer numberOfUsers=jdbcTemplate.queryForObject(sql,new Object[] {username},Integer.class);
+		if(numberOfUsers==1) {
+			return true;
+		}
+		return false;
+		
+	}
+	
+	@Override
+	public Integer getUserIdFromUserName(String username) {
+		jdbcTemplate = new JdbcTemplate(datasource);
+		String sql="Select id from users where username=?";
+		Integer userId=jdbcTemplate.queryForObject(sql,new Object[] {username},Integer.class);
+		return userId;
+	}
+
+
+
+
+
+	
 
 }

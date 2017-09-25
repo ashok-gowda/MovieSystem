@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.IMovieDao;
+import model.Comment;
 import model.Movie;
+import model.MovieWithComments;
 import service.IMovieService;
 
 @Service("MovieServiceImpl")
@@ -51,6 +53,34 @@ public class MovieServiceImpl implements IMovieService {
 		}
 		return listOfMovies;
 	}
+
+	@Override
+	public Movie getMovieInformationById(String id) {
+		return movieDao.getMovieInformationById(id);
+	}
+
+	@Override
+	public MovieWithComments getMovieInformationWithCommentsByMovieId(String movieId) {
+		Movie movie=getMovieInformationById(movieId);
+		List<Comment> listOfComments=movieDao.getMovieCommentsByMovieId(movieId);
+		MovieWithComments movieInformation=new MovieWithComments(movie, listOfComments);
+		movieInformation.setGenres(movieDao.getGenresOfMovieById(movieId));
+		movieInformation.setActorsInvolved(movieDao.getActorsOfMovieByMovieId(movieId));
+		return movieInformation;
+	}
+
+	@Override
+	public boolean checkIfMovieIdisValid(String movieId) {
+		return movieDao.checkIfMovieIdisValid(movieId);
+	}
+
+	@Override
+	public void insertCommentsAndRatings(String userId, String movieId, String comment, String rating) {
+		movieDao.insertCommentsAndRatings(userId, movieId, comment, rating);
+		
+	}
+
+	
 
 	
 	
