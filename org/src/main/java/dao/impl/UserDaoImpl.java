@@ -46,12 +46,35 @@ public class UserDaoImpl implements UserDao {
 		
 	}
 	
+	
+	public boolean validateEmail(String email) {
+		jdbcTemplate = new JdbcTemplate(datasource);
+		String sql="Select count(*) from users where email=?";
+		Integer numberOfUsers=jdbcTemplate.queryForObject(sql,new Object[] {email},Integer.class);
+		if(numberOfUsers==1) {
+			return true;
+		}
+		return false;		
+	}
+	
 	@Override
 	public Integer getUserIdFromUserName(String username) {
 		jdbcTemplate = new JdbcTemplate(datasource);
 		String sql="Select id from users where username=?";
 		Integer userId=jdbcTemplate.queryForObject(sql,new Object[] {username},Integer.class);
 		return userId;
+	}
+
+
+
+
+
+	@Override
+	public void insertNewUser(String username, String email, String password, String address, String city,
+			String country, String zip, String phoneNumber) {
+		String sql="Insert into users(username,password,email,phone,address,city,zip,country) VALUES (?,?,?,?,?,?,?,?)";
+		jdbcTemplate = new JdbcTemplate(datasource);
+		jdbcTemplate.update(sql,new Object[] {username,password,email,phoneNumber,address,city,zip,country});
 	}
 
 

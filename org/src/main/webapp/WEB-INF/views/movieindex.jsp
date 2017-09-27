@@ -86,7 +86,7 @@
     </form>
       </li>
       <li>
-      <button class="btn btn-danger navbar-btn"><a href="javascript:close_window();">LOG OUT</a></button>
+      <button class="btn btn-danger navbar-btn" ng-click="logout('t')">LOG OUT</button>
       </li>
       </ul>
   </nav>

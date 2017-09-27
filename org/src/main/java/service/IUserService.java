@@ -7,5 +7,9 @@ public interface IUserService {
 	public boolean validateUserName(String username);
 	
 	public Integer getUserIdFromUsername(String username);
+	
+	public boolean validateEmail(String email);
+	
+	public void insertNewUser(String username,String email,String password,String address,String city,String country,String zip,String phoneNumber);
 
 }

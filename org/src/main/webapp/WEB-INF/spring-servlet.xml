@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-   <context:component-scan base-package="controller,dao,model,service" />
+   <context:component-scan base-package="controller,dao,model,service,authenciator" />
 
     <bean id="viewResolver"
     	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -32,6 +32,12 @@
 	</bean>
     
     <mvc:annotation-driven/>
+    
+    <mvc:interceptors>
+ 	<!-- This runs for all mappings -->
+     <bean class="authenciator.AuthenticationInterceptor"/>
+	</mvc:interceptors>
+ 
     
     <mvc:resources mapping="/resources/**" location="/resources/theme1/"
 	cache-period="31556926"/>

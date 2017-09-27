@@ -22,10 +22,12 @@
       <a class="navbar-brand" href="#">{{websiteName}}</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">{{movieName}}</a></li>
-      <li class="active">
-      <a href="javascript:close_window();">Log Out</a>
+      <li class="active" ng-click="home()"><a class="navbar-brand" href="#">Home</a></li>
+      <li><a class="navbar-brand" href="#">{{movieName}}</a></li>
+      <li class="active" ng-click="logout()">
+      <a class="navbar-brand" href="#">
+      Log Out
+      </a>
       </li>
       </ul>
     </ul>

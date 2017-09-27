@@ -52,5 +52,24 @@ app.controller('myController', function($scope,$http,$timeout) {
 		
 	}
 	
+	$scope.logout=function(){
+		var url="/user/logout";
+		var data={
+			"username":$scope.username	
+		}
+		$http.post(url,JSON.stringify(data))
+		.then(function(response){
+			var messageData=response.data
+			if(messageData.statusCode=="200"){
+				window.location="/user/"
+			}
+		}, function errorCallback(response) {
+		    console.log(response)
+		  });
+		
+		}
 	
+	$scope.home=function(){
+		window.location="/movieIndex/"+$scope.username
+	}
 	});

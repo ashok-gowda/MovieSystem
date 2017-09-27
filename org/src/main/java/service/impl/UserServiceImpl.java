@@ -25,4 +25,17 @@ public class UserServiceImpl implements IUserService {
 		return userDao.getUserIdFromUserName(username);
 	}
 
+	@Override
+	public boolean validateEmail(String email) {
+		return userDao.validateEmail(email);
+	}
+
+	@Override
+	public void insertNewUser(String username, String email, String password, String address, String city,
+			String country, String zip, String phoneNumber) {
+		userDao.insertNewUser(username, email, password, address, city, country, zip, phoneNumber);
+		
+		
+	}
+
 }

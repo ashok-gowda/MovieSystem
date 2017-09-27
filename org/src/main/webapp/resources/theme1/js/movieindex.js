@@ -47,4 +47,24 @@ app.controller('myController', function($scope,$http,$location) {
 		}
 		return listOfdata;
 	}
+	
+	$scope.logout=function(s){
+		var url="/user/logout";
+		var data={
+			"username":$scope.username	
+		}
+		$http.post(url,JSON.stringify(data))
+		.then(function(response){
+			var messageData=response.data
+			if(messageData.statusCode=="200"){
+				window.location="/user/"
+			}
+		}, function errorCallback(response) {
+		    console.log(response)
+		  });
+		
+		}
+	
+	
+	
 	});
