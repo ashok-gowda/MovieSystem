@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,68 @@ public class MovieServiceImpl implements IMovieService {
 	public void insertCommentsAndRatings(String userId, String movieId, String comment, String rating) {
 		movieDao.insertCommentsAndRatings(userId, movieId, comment, rating);
 		
+	}
+
+	@Override
+	public void insertMovie(Movie movie) {
+		Integer movieId=movieDao.insertMovie(movie);
+		for(String genreName:movie.getGenres()) {
+			Integer genreId=movieDao.getGenreIdIfPresent(genreName);
+			if(genreId==null) {
+				genreId=movieDao.insertNewGenre(genreName);
+			}
+			movieDao.insertMovieGenres(String.valueOf(movieId),String.valueOf(genreId));
+		}
+		for(String actorName:movie.getActors()) {
+			Integer actorId=movieDao.getActorIdIfPresent(actorName);
+			if(actorId==null) {
+				actorId=movieDao.inserNewActor(actorName);
+			}
+			movieDao.insertMovieActors(String.valueOf(movieId),String.valueOf(actorId));
+		}
+		
+	}
+
+	@Override
+	public void deleteMovie(String movieId) {
+		movieDao.deleteMovie(movieId);
+		
+	}
+
+	@Override
+	public List<Movie> fetchAllMovies() {
+		List<Movie> listOfMovies=movieDao.getListOfMoviesByReleaseRange(new LocalDate(1900,1,1).toDate(), new Date());
+		List<Movie> resultSetOfMovies=new ArrayList<Movie>();
+		for(int i=0;i<listOfMovies.size();i++) {
+			Movie movie=listOfMovies.get(i);
+			List<String> genres=movieDao.getGenresOfMovieById(String.valueOf(movie.getId()));
+			List<String> actors=movieDao.getActorsOfMovieByMovieId(String.valueOf(movie.getId()));
+			movie.setGenres(genres);
+			movie.setActors(actors);
+			resultSetOfMovies.add(movie);
+		}
+		return resultSetOfMovies;
+	}
+
+	@Override
+	public void updateMovie(Movie movie, String movieId) {
+		movieDao.updateMovie(movie, movieId);
+		movieDao.deleteAssociationsOfAMovieWithAGenre(movieId);
+		movieDao.deleteAssociationsOfAMovieWithAnActor(movieId);
+		for(String genreName:movie.getGenres()) {
+			Integer genreId=movieDao.getGenreIdIfPresent(genreName);
+			if(genreId==null) {
+				genreId=movieDao.insertNewGenre(genreName);
+			}
+			movieDao.insertMovieGenres(String.valueOf(movieId),String.valueOf(genreId));
+		}
+		for(String actorName:movie.getActors()) {
+			Integer actorId=movieDao.getActorIdIfPresent(actorName);
+			if(actorId==null) {
+				actorId=movieDao.inserNewActor(actorName);
+			}
+			movieDao.insertMovieActors(String.valueOf(movieId),String.valueOf(actorId));
+		}
 	}
 
 	

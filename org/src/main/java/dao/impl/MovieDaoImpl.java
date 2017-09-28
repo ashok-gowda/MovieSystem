@@ -32,7 +32,7 @@ public class MovieDaoImpl implements IMovieDao {
 	@Override
 	public List<Movie> getListOfMoviesByGenre(String genre) {
 		String sql="Select A.id,A.lang,A.description,A.poster,A.rated,A.title,A.runtime,A.releaseDate"
-				+ " from movie AS A, movie_genre AS B, genre As G where A.id=B.movie_id and B.genre_id=G.id and G.name=?";
+				+ " from movie AS A, movie_genre AS B, genre As G where A.id=B.movie_id and B.genre_id=G.id and A.deleted=false and G.name=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {genre});
 		return getListOfMoviesFromRows(rows);
@@ -60,7 +60,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public List<Movie> getListOfMoviesByLanguage(String language) {
-		String sql="Select * from movie where lang=?";
+		String sql="Select * from movie where deleted=false and  lang=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {language});
 		return getListOfMoviesFromRows(rows);
@@ -70,7 +70,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public List<Movie> getListOfMoviesByReleaseRange(Date startDate, Date endDate) {
-		String sql="Select * from movie where releaseDate between ? and ?";
+		String sql="Select * from movie where deleted=false and  releaseDate between ? and ?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {startDate,endDate});
 		return getListOfMoviesFromRows(rows);
@@ -80,7 +80,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public List<Movie> getListOfMoviesBySearchTitle(String title) {
-		String sql="Select * from movie where title LIKE ?";
+		String sql="Select * from movie where deleted=false and  title LIKE ?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		title="%"+title+"%";
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {title});
@@ -92,7 +92,7 @@ public class MovieDaoImpl implements IMovieDao {
 	@Override
 	public List<Movie> getListOfMoviesBySearchArtist(String actor) {
 		String sql="Select A.id,A.lang,A.description,A.poster,A.rated,A.title,A.runtime,A.releaseDate"
-				+ " from movie AS A, movie_actor AS B, actor As G where A.id=B.movie_id and B.actor_id=G.id and G.name LIKE ?";
+				+ " from movie AS A, movie_actor AS B, actor As G where A.id=B.movie_id and B.actor_id=G.id and A.deleted=false and G.name LIKE ?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		actor="%"+actor+"%";
 		List<Map<String,Object>> rows=template.queryForList(sql,new Object[] {actor});
@@ -103,7 +103,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public Movie getMovieInformationById(String id) {
-		String sql="Select * from movie where id=?";
+		String sql="Select * from movie where deleted=false and id=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		List<Map<String,Object>> listOfRows=template.queryForList(sql,new Object[] {id});
 		Movie movie=new Movie();
@@ -181,7 +181,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public boolean checkIfMovieIdisValid(String movieId) {
-		String sql="Select count(*) from movie where id=?";
+		String sql="Select count(*) from movie where deleted=false and id=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		Integer rowCount=template.queryForObject(sql,new Object[] {movieId},Integer.class);
 		if(rowCount==1) {
@@ -189,6 +189,135 @@ public class MovieDaoImpl implements IMovieDao {
 		}
 		return false;
 	}
+
+
+
+	@Override
+	public int insertMovie(Movie movie) {
+		String sql="Insert into movie(title,rated,runtime,lang,poster,description,releaseDate) values(?,?,?,?,?,?,?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movie.getTitle(),movie.getRated(),movie.getRuntime(),movie.getLanguage()
+				,movie.getPoster(),movie.getDescription(),movie.getReleaseDate()});
+		sql="Select id from movie order by id DESC limit 1";
+		Integer idInserted=template.queryForObject(sql,Integer.class);
+		return idInserted;
+	}
+
+
+
+	@Override
+	public void deleteMovie(String movieId) {
+		String sql="Update movie set deleted=true where movieId=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movieId});
+		
+	}
+
+
+
+	@Override
+	public List<Movie> fetchAllMovies() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void updateMovie(Movie movie, String movieId) {
+		String sql="Update movie set title=?, rated=?, releaseDate=?, runtime=?, language=?, poster=?, description=? where id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movie.getTitle(),movie.getRated(),movie.getReleaseDate(),movie.getRuntime(),movie.getLanguage()
+				,movie.getPoster(),movie.getDescription(),movie.getId()});		
+	}
+
+
+
+	@Override
+	public void insertMovieGenres(String movieId,String genreId) {
+		String sql="Insert into movie_genre(movie_id,genre_id) VALUES (?,?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movieId,genreId});
+	}
+
+
+
+	@Override
+	public void insertMovieActors(String movieId,String actorId) {
+		String sql="Insert into movie_actor(movie_id,actor_id) VALUES (?,?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movieId,actorId});
+	}
+
+
+
+	@Override
+	public Integer getGenreIdIfPresent(String genreName) {
+		String sql="Select id from genre where name LIKE ?";
+		genreName="%"+genreName+"%";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		Integer genreId=template.queryForObject(sql,new Object[] {genreName},Integer.class);
+		return genreId;
+	}
+
+
+
+	@Override
+	public Integer getActorIdIfPresent(String actorName) {
+		String sql="Select count(*) from actor where name LIKE ?";
+		actorName="%"+actorName+"%";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		Integer actorId=template.queryForObject(sql,new Object[] {actorName},Integer.class);
+		return actorId;		
+	}
+
+
+
+	@Override
+	public Integer insertNewGenre(String genreName) {
+		String sql="Insert into genre(name) VALUES(?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {genreName});
+		sql="Select id from genre order by id DESC limit 1";
+		Integer idInserted=template.queryForObject(sql,Integer.class);
+		return idInserted;
+		
+	}
+
+
+
+	@Override
+	public Integer inserNewActor(String actorName) {
+		String sql="Insert into actor(name) VALUES(?)";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {actorName});
+		sql="Select id from actor order by id DESC limit 1";
+		Integer idInserted=template.queryForObject(sql,Integer.class);
+		return idInserted;
+		
+	}
+
+
+
+	@Override
+	public void deleteAssociationsOfAMovieWithAGenre(String movieId) {
+		String sql="Delete from movie_genre where movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movieId});
+	}
+
+
+
+	@Override
+	public void deleteAssociationsOfAMovieWithAnActor(String movieId) {
+		String sql="Delete from movie_actor where movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		template.update(sql,new Object[] {movieId});
+	}
+
+
+
+	
 	
 	
 	

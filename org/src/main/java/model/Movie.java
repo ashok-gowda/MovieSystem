@@ -1,6 +1,9 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Movie {
 
@@ -10,6 +13,7 @@ public class Movie {
 	
 	String rated;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd ")
 	Date releaseDate;
 	
 	String runtime;
@@ -19,6 +23,10 @@ public class Movie {
 	String poster;
 	
 	String description;
+	
+	List<String> genres;
+	
+	List<String> actors;
 	
 	public Movie() {
 		
@@ -99,6 +107,24 @@ public class Movie {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	
+
+	public List<String> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<String> genres) {
+		this.genres = genres;
+	}
+
+	public List<String> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<String> actors) {
+		this.actors = actors;
 	}
 
 	@Override

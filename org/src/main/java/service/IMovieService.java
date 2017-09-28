@@ -26,5 +26,12 @@ public interface IMovieService {
 	
 	public void insertCommentsAndRatings(String userId, String movieId, String comment, String rating);
 	
+	public void insertMovie(Movie movie);
+	
+	public void deleteMovie(String movieId);
+	
+	public List<Movie> fetchAllMovies();
+	
+	public void updateMovie(Movie movie,String movieId);
 
 }
