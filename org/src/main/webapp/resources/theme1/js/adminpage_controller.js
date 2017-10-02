@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp').controller('MovieController', ['$scope', 'MovieService', function($scope, MovieService) {
+angular.module('myApp').controller('MovieController', ['$scope','$route', 'MovieService', function($scope,$route, MovieService) {
     var self = this;
-    self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:''};
+    self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:'',releaseDateInString:''};
     self.movies=[];
     self.dateSelected=new Date();
     self.submit = submit;
@@ -26,8 +26,6 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
     }
 
     function createMovie(movie){
-    	movie.releaseDateInString=movie.releaseDate
-    	movie.releaseDate=null
         MovieService.createMovie(movie)
             .then(
             fetchAllMovies,
@@ -35,11 +33,10 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
                 console.error('Error while creating Movies');
             }
         );
+        $route.reload();
     }
 
     function updateMovie(movie, id){
-    	movie.releaseDateInString=movie.releaseDate
-    	movie.releaseDate=null
         MovieService.updateMovie(movie, id)
             .then(
             fetchAllMovies,
@@ -47,6 +44,7 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
                 console.error('Error while updating Movie');
             }
         );
+        $route.reload();
     }
 
     function deleteMovie(id){
@@ -57,6 +55,7 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
                 console.error('Error while deleting Movie');
             }
         );
+        $route.reload();
     }
 
     function submit() {
@@ -90,9 +89,7 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
 
 
     function reset(){
-        self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:''};
-        self.actorString="";
-        self.genreString=""
+        self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:'',releaseDateInString:''};
         $scope.myForm.$setPristine(); //reset Form
     }
 

@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import model.LoginRequest;
 import model.RegisterRequest;
 import model.ResponseMessage;
+import model.User;
+import model.UserRequest;
 import service.IUserService;
 
 @Controller
@@ -104,4 +106,9 @@ public class UserController {
 	}
 	
 
+	@RequestMapping(value="/getDetailsOfUsers",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	public @ResponseBody User getDetailsOfUser(@RequestBody UserRequest request) {
+		return userService.getUserFromUsername(request.getUsername());		
+	}
+	
 }

@@ -1,5 +1,8 @@
 package dao.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import dao.UserDao;
+import model.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 	
@@ -75,6 +79,33 @@ public class UserDaoImpl implements UserDao {
 		String sql="Insert into users(username,password,email,phone,address,city,zip,country) VALUES (?,?,?,?,?,?,?,?)";
 		jdbcTemplate = new JdbcTemplate(datasource);
 		jdbcTemplate.update(sql,new Object[] {username,password,email,phoneNumber,address,city,zip,country});
+	}
+
+
+
+
+
+	@Override
+	public boolean isUserAdmin(String username) {
+		jdbcTemplate = new JdbcTemplate(datasource);
+		String sql="Select isAdmin from users where username=?";
+		Boolean isAdmin=jdbcTemplate.queryForObject(sql,new Object[] {username},Boolean.class);
+		return isAdmin;
+	}
+
+
+
+
+
+	@Override
+	public User getUserFromUsername(String username) {
+		jdbcTemplate=new JdbcTemplate(datasource);
+		String sql="Select * from users where username=?";
+		List<Map<String,Object>> rows=jdbcTemplate.queryForList(sql,new Object[] {username});
+		User user=new User();
+		user.setId((Integer)rows.get(0).get("id"));
+		user.setIsAdmin((Boolean)rows.get(0).get("isAdmin"));
+		return user;
 	}
 
 

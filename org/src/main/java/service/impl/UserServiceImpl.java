@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.UserDao;
+import model.User;
 import service.IUserService;
 @Service("UserServiceImpl")
 public class UserServiceImpl implements IUserService {
@@ -36,6 +37,16 @@ public class UserServiceImpl implements IUserService {
 		userDao.insertNewUser(username, email, password, address, city, country, zip, phoneNumber);
 		
 		
+	}
+
+	@Override
+	public boolean isUserAdmin(String username) {
+		return userDao.isUserAdmin(username);
+	}
+
+	@Override
+	public User getUserFromUsername(String username) {
+		return userDao.getUserFromUsername(username);
 	}
 
 }

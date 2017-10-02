@@ -1,5 +1,7 @@
 package service;
 
+import model.User;
+
 public interface IUserService {
 	
 	public boolean validateUser(String username, String password);
@@ -11,5 +13,9 @@ public interface IUserService {
 	public boolean validateEmail(String email);
 	
 	public void insertNewUser(String username,String email,String password,String address,String city,String country,String zip,String phoneNumber);
+	
+	public boolean isUserAdmin(String username);
+	
+	public User getUserFromUsername(String username);
 
 }

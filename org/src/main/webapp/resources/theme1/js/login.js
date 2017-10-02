@@ -16,8 +16,24 @@ $scope.validateLogin=function(){
 			$scope.errorMessage="Please check whether the details entered is correct"
 		}
 		else if(angular.equals(response.data.message,"Authenciated")){
-			var redirectUrl="/movieIndex/"+$scope.username;
-			window.location=redirectUrl
+			var url="/user/getDetailsOfUsers"
+			var data={
+					"username":$scope.username
+			}	
+				$http.post(url,JSON.stringify(data),{headers:{'Content-Type': 'application/json'}})
+				.then(function(response){
+					var dataMessage=response.data
+					console.log(dataMessage)
+					if(dataMessage.isAdmin==true){
+						var redirectUrl="/admin/adminPanel"
+						window.location=redirectUrl
+					}
+					else{
+					var redirectUrl="/movieIndex/"+$scope.username;
+					window.location=redirectUrl
+					}
+				})
+			
 		}
 	})
 

@@ -119,7 +119,7 @@
                               <label class="col-md-2 control-lable" for="file">Release Date</label>
                               <div class="col-md-7">
                                   <div class="input-group date" data-provide="datepicker" id="datetime1">
-    								<input type="text" class="form-control" value="{{ctrl.movie.releaseDate | date:' dd/MM/yyyy'}}" ng-model="ctrl.movie.releaseDate"/>
+    								<input type="text" class="form-control"  ng-model="ctrl.movie.releaseDateInString"/>
     										<div class="input-group-addon">
         										<span class="glyphicon glyphicon-th"></span>
     										</div>

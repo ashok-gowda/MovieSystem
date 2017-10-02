@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -51,7 +52,13 @@ public class MovieDaoImpl implements IMovieDao {
 			movie.setTitle((String)row.get("title"));
 			movie.setRuntime((String) row.get("runtime"));
 			movie.setReleaseDate((Date)row.get("releaseDate"));
-			
+			SimpleDateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+			try {
+				movie.setReleaseDateInString(df.format(movie.getReleaseDate()));
+			}
+			catch(Exception e ) {
+				
+			}
 			listOfMovies.add(movie);
 		}
 		return listOfMovies;
@@ -208,7 +215,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public void deleteMovie(String movieId) {
-		String sql="Update movie set deleted=true where movieId=?";
+		String sql="Update movie set deleted=true where id=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		template.update(sql,new Object[] {movieId});
 		
@@ -226,7 +233,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public void updateMovie(Movie movie, String movieId) {
-		String sql="Update movie set title=?, rated=?, releaseDate=?, runtime=?, language=?, poster=?, description=? where id=?";
+		String sql="Update movie set title=?, rated=?, releaseDate=?, runtime=?, lang=?, poster=?, description=? where id=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		template.update(sql,new Object[] {movie.getTitle(),movie.getRated(),movie.getReleaseDate(),movie.getRuntime(),movie.getLanguage()
 				,movie.getPoster(),movie.getDescription(),movie.getId()});		
@@ -254,21 +261,34 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public Integer getGenreIdIfPresent(String genreName) {
+		Integer genreId=null;
+		try {
 		String sql="Select id from genre where name LIKE ? order by id DESC limit 1";
 		genreName="%"+genreName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
-		Integer genreId=template.queryForObject(sql,new Object[] {genreName},Integer.class);
+		genreId=template.queryForObject(sql,new Object[] {genreName},Integer.class);
+		}
+		catch(Exception e) {
+			return null;
+		}
 		return genreId;
+		
 	}
 
 
 
 	@Override
 	public Integer getActorIdIfPresent(String actorName) {
+		Integer actorId=null;
+		try {
 		String sql="Select id  from actor where name LIKE ? order by id DESC limit 1";
 		actorName="%"+actorName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
-		Integer actorId=template.queryForObject(sql,new Object[] {actorName},Integer.class);
+		actorId=template.queryForObject(sql,new Object[] {actorName},Integer.class);
+		}
+		catch(Exception e) {
+			return null;
+		}
 		return actorId;		
 	}
 
