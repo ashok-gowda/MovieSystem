@@ -8,6 +8,21 @@ app.controller('myController', function($scope,$http,$location) {
 	$scope.value=0
 	$scope.searchValue=""
 	$scope.listOfMovies=null
+	
+	var url="/movieIndex/getTopRecommendedMovies";
+	$http.get(url,{headers:{'Content-Type': 'application/json'}})
+		.then(function(response){
+			$scope.listOfMovies=$scope.generateRelativeUrls(response.data);
+			var myEl = angular.element( document.querySelector( '#id_TOP_RATED' ) );
+			myEl.addClass('active');	
+		})
+		
+	
+	
+	
+	
+	
+	
 	$scope.clickSearchButton=function(s){
 		var url="/movieIndex/search/"+s
 			$http.get(url)

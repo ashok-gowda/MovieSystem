@@ -20,7 +20,7 @@
       <a class="navbar-brand" href="#">Hello ${username}</a>
     </div>
     <ul class="nav navbar-nav">
-    	<li><a href="#" ng-click="value=getMovies('TOP_RATED','RATING')">Top Rated Movies</a></li>
+    	<li id="id_TOP_RATED"><a href="#" ng-click="value=getMovies('TOP_RATED','RATING')">Top Rated Movies</a></li>
     	<li><a href="#" ng-click="value=getMovies('RECOMMENDED','RECOMMENDATIONS')">Your Recommended Movies</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movies By Genre
@@ -57,7 +57,7 @@
         <ul class="dropdown-menu">
           <li><a href="#" ng-click="getMovies('ENGLISH','LANGUAGE')">English</a></li>
           <li><a href="#" ng-click="getMovies('SPANISH','LANGUAGE')">Spanish</a></li>
-           <li><a href="#" ng-click="getMovies('FRENCH','LANGUAGE')">Spanish</a></li>
+           <li><a href="#" ng-click="getMovies('FRENCH','LANGUAGE')">French</a></li>
         </ul>
         </li>
 
@@ -66,8 +66,6 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movies By Year Released
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#" ng-click="getMovies('1970-1980','YEARRANGE')">1970-1980</a></li>
-          <li><a href="#" ng-click="getMovies('1980-1990','YEARRANGE')">1980-1990</a></li>
           <li><a href="#" ng-click="getMovies('1990-2000','YEARRANGE')">1990-2000</a></li>
           <li><a href="#" ng-click="getMovies('2000-2010','YEARRANGE')">2000-2010</a></li>
           <li><a href="#" ng-click="getMovies('After2010','YEARRANGE')"> After 2010</a></li>

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Movie {
 
@@ -13,7 +14,7 @@ public class Movie {
 	
 	String rated;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd ")
+	@JsonProperty(required=false)
 	Date releaseDate;
 	
 	String runtime;
@@ -24,9 +25,11 @@ public class Movie {
 	
 	String description;
 	
-	List<String> genres;
+	String actorString;
 	
-	List<String> actors;
+	String genreString;
+	
+	String releaseDateInString;
 	
 	public Movie() {
 		
@@ -110,21 +113,30 @@ public class Movie {
 	}
 	
 	
-
-	public List<String> getGenres() {
-		return genres;
+	
+	
+	public String getActorString() {
+		return actorString;
 	}
 
-	public void setGenres(List<String> genres) {
-		this.genres = genres;
+	public void setActorString(String actorString) {
+		this.actorString = actorString;
 	}
 
-	public List<String> getActors() {
-		return actors;
+	public String getGenreString() {
+		return genreString;
 	}
 
-	public void setActors(List<String> actors) {
-		this.actors = actors;
+	public void setGenreString(String genreString) {
+		this.genreString = genreString;
+	}
+
+	public String getReleaseDateInString() {
+		return releaseDateInString;
+	}
+
+	public void setReleaseDateInString(String releaseDateInString) {
+		this.releaseDateInString = releaseDateInString;
 	}
 
 	@Override

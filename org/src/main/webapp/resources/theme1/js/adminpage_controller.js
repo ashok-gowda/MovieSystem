@@ -2,15 +2,13 @@
 
 angular.module('myApp').controller('MovieController', ['$scope', 'MovieService', function($scope, MovieService) {
     var self = this;
-    self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actors:[],genres:[]};
+    self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:''};
     self.movies=[];
     self.dateSelected=new Date();
     self.submit = submit;
     self.edit = edit;
     self.remove = remove;
     self.reset = reset;
-    self.genreString=""
-    self.actorString=""
     
 
     fetchAllMovies();
@@ -28,6 +26,8 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
     }
 
     function createMovie(movie){
+    	movie.releaseDateInString=movie.releaseDate
+    	movie.releaseDate=null
         MovieService.createMovie(movie)
             .then(
             fetchAllMovies,
@@ -38,8 +38,8 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
     }
 
     function updateMovie(movie, id){
-    	movies.actor=self.actorString.split(",")
-    	movies.genre=self.genreString.split(",")
+    	movie.releaseDateInString=movie.releaseDate
+    	movie.releaseDate=null
         MovieService.updateMovie(movie, id)
             .then(
             fetchAllMovies,
@@ -75,8 +75,6 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
         for(var i = 0; i < self.movies.length; i++){
             if(self.movies[i].id === id) {
                 self.movie = angular.copy(self.movies[i]);
-                self.actorString=self.movie.actors.join()
-                self.genreString=self.movie.genres.join()
                 break;
             }
         }
@@ -93,6 +91,8 @@ angular.module('myApp').controller('MovieController', ['$scope', 'MovieService',
 
     function reset(){
         self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:''};
+        self.actorString="";
+        self.genreString=""
         $scope.myForm.$setPristine(); //reset Form
     }
 

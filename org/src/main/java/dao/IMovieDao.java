@@ -55,6 +55,6 @@ public interface IMovieDao {
 	
 	public void deleteAssociationsOfAMovieWithAnActor(String actorId);
 	
-
+	public List<Movie> getListOfTopRatedMovies();
 
 }

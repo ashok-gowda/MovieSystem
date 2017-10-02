@@ -1,5 +1,6 @@
 package controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,8 @@ public class MovieInformationController {
 	public @ResponseBody ResponseMessage insertMovie(@RequestBody Movie movie) {
 		ResponseMessage response=null;
 		try {
+			SimpleDateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+			movie.setReleaseDate(df.parse(movie.getReleaseDateInString()));
 			movieService.insertMovie(movie);
 			response=new ResponseMessage("200","Movie inserted");
 		}
@@ -110,6 +113,8 @@ public class MovieInformationController {
 	public @ResponseBody ResponseMessage updateMovie(@RequestBody Movie movie) {
 		ResponseMessage response=null;
 		try {
+			SimpleDateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+			movie.setReleaseDate(df.parse(movie.getReleaseDateInString()));
 			movieService.updateMovie(movie,String.valueOf(movie.getId()));
 			response=new ResponseMessage("200","Movie inserted");
 		}

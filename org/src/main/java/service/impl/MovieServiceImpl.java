@@ -84,14 +84,16 @@ public class MovieServiceImpl implements IMovieService {
 	@Override
 	public void insertMovie(Movie movie) {
 		Integer movieId=movieDao.insertMovie(movie);
-		for(String genreName:movie.getGenres()) {
+		String[] genres=movie.getGenreString().split(",");
+		for(String genreName:genres) {
 			Integer genreId=movieDao.getGenreIdIfPresent(genreName);
 			if(genreId==null) {
 				genreId=movieDao.insertNewGenre(genreName);
 			}
 			movieDao.insertMovieGenres(String.valueOf(movieId),String.valueOf(genreId));
 		}
-		for(String actorName:movie.getActors()) {
+	  String[] actors=movie.getActorString().split(",");	
+		for(String actorName:actors) {
 			Integer actorId=movieDao.getActorIdIfPresent(actorName);
 			if(actorId==null) {
 				actorId=movieDao.inserNewActor(actorName);
@@ -115,8 +117,8 @@ public class MovieServiceImpl implements IMovieService {
 			Movie movie=listOfMovies.get(i);
 			List<String> genres=movieDao.getGenresOfMovieById(String.valueOf(movie.getId()));
 			List<String> actors=movieDao.getActorsOfMovieByMovieId(String.valueOf(movie.getId()));
-			movie.setGenres(genres);
-			movie.setActors(actors);
+			movie.setGenreString(String.join(",", genres));
+			movie.setActorString(String.join(",", actors));
 			resultSetOfMovies.add(movie);
 		}
 		return resultSetOfMovies;
@@ -127,20 +129,27 @@ public class MovieServiceImpl implements IMovieService {
 		movieDao.updateMovie(movie, movieId);
 		movieDao.deleteAssociationsOfAMovieWithAGenre(movieId);
 		movieDao.deleteAssociationsOfAMovieWithAnActor(movieId);
-		for(String genreName:movie.getGenres()) {
+		String[] genres=movie.getGenreString().split(",");
+		for(String genreName:genres) {
 			Integer genreId=movieDao.getGenreIdIfPresent(genreName);
 			if(genreId==null) {
 				genreId=movieDao.insertNewGenre(genreName);
 			}
 			movieDao.insertMovieGenres(String.valueOf(movieId),String.valueOf(genreId));
 		}
-		for(String actorName:movie.getActors()) {
+		String[] actors=movie.getActorString().split(",");
+		for(String actorName:actors) {
 			Integer actorId=movieDao.getActorIdIfPresent(actorName);
 			if(actorId==null) {
 				actorId=movieDao.inserNewActor(actorName);
 			}
 			movieDao.insertMovieActors(String.valueOf(movieId),String.valueOf(actorId));
 		}
+	}
+
+	@Override
+	public List<Movie> getListOfTopRatedMovies() {
+		return movieDao.getListOfTopRatedMovies();
 	}
 
 	

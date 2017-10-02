@@ -70,5 +70,16 @@ public class MovieIndexController {
 			}
 			return null;
 	}
+	
+	@RequestMapping(value="/getTopRecommendedMovies",method=RequestMethod.GET)
+	public @ResponseBody List<Movie> getTopRecommendedMovies(){
+		try {
+			return movieService.getListOfTopRatedMovies();
+		}
+		catch(Exception e) {
+			
+		}
+		return null;
+	}
 
 }

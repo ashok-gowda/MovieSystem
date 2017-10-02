@@ -51,6 +51,7 @@ public class MovieDaoImpl implements IMovieDao {
 			movie.setTitle((String)row.get("title"));
 			movie.setRuntime((String) row.get("runtime"));
 			movie.setReleaseDate((Date)row.get("releaseDate"));
+			
 			listOfMovies.add(movie);
 		}
 		return listOfMovies;
@@ -253,7 +254,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public Integer getGenreIdIfPresent(String genreName) {
-		String sql="Select id from genre where name LIKE ?";
+		String sql="Select id from genre where name LIKE ? order by id DESC limit 1";
 		genreName="%"+genreName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		Integer genreId=template.queryForObject(sql,new Object[] {genreName},Integer.class);
@@ -264,7 +265,7 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public Integer getActorIdIfPresent(String actorName) {
-		String sql="Select count(*) from actor where name LIKE ?";
+		String sql="Select id  from actor where name LIKE ? order by id DESC limit 1";
 		actorName="%"+actorName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		Integer actorId=template.queryForObject(sql,new Object[] {actorName},Integer.class);
@@ -313,6 +314,31 @@ public class MovieDaoImpl implements IMovieDao {
 		String sql="Delete from movie_actor where movie_id=?";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		template.update(sql,new Object[] {movieId});
+	}
+
+
+
+	@Override
+	public List<Movie> getListOfTopRatedMovies() {
+		String sql="SELECT * from theatre.movie as a join (" + 
+				"Select AVG(rating)as average_rating,movie_id from theatre.movie_ratings group by movie_id) as b on b.movie_id=a.id order by b.average_rating DESC";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql);
+		List<Movie> listOfMovies=new ArrayList<Movie>();
+		for(Map<String,Object> row:rows) {
+			Movie movie=new Movie();
+			movie.setId((Integer)row.get("id"));
+			movie.setLanguage((String)row.get("lang"));
+			movie.setDescription((String)row.get("description"));
+			movie.setPoster((String)row.get("poster"));
+			movie.setRated((String)row.get("rated"));
+			movie.setTitle((String)row.get("title"));
+			movie.setRuntime((String) row.get("runtime"));
+			movie.setReleaseDate((Date)row.get("releaseDate"));
+			listOfMovies.add(movie);
+		}
+		return listOfMovies;
+		
 	}
 
 

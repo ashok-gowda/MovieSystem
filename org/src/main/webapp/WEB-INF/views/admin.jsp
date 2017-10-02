@@ -119,7 +119,7 @@
                               <label class="col-md-2 control-lable" for="file">Release Date</label>
                               <div class="col-md-7">
                                   <div class="input-group date" data-provide="datepicker" id="datetime1">
-    								<input type="text" class="form-control" value="{{ctrl.dateSelected | date:' MM-dd-yyyy'}}" ng-model="ctrl.movie.releaseDate"/>
+    								<input type="text" class="form-control" value="{{ctrl.movie.releaseDate | date:' dd/MM/yyyy'}}" ng-model="ctrl.movie.releaseDate"/>
     										<div class="input-group-addon">
         										<span class="glyphicon glyphicon-th"></span>
     										</div>
@@ -189,7 +189,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="file">Actors</label>
                               <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.actorString" name="actor" class="actor form-control input-sm" placeholder="Enter Names of Actors separated by ," required ng-minlength="3"/>
+                                  <input type="text" ng-model="ctrl.movie.actorString" name="actor" class="actor form-control input-sm" placeholder="Enter Names of Actors separated by ," required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.actor.$error.required">This is a required field</span>
                                       <span ng-show="myForm.actor.$error.minlength">Minimum length required is 3</span>
@@ -203,7 +203,7 @@
                           <div class="form-group col-md-12">
                               <label class="col-md-2 control-lable" for="file">Genres</label>
                               <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.genreString" name="genre" class="genre form-control input-sm" placeholder="Enter Names of Genres separated by ," required ng-minlength="3"/>
+                                  <input type="text" ng-model="ctrl.movie.genreString" name="genre" class="genre form-control input-sm" placeholder="Enter Names of Genres separated by ," required ng-minlength="3"/>
                                   <div class="has-error" ng-show="myForm.$dirty">
                                       <span ng-show="myForm.genre.$error.required">This is a required field</span>
                                       <span ng-show="myForm.genre.$error.minlength">Minimum length required is 3</span>

@@ -33,5 +33,7 @@ public interface IMovieService {
 	public List<Movie> fetchAllMovies();
 	
 	public void updateMovie(Movie movie,String movieId);
+	
+	public List<Movie> getListOfTopRatedMovies();
 
 }
