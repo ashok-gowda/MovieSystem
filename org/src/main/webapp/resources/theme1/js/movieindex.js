@@ -53,6 +53,24 @@ app.controller('myController', function($scope,$http,$location) {
 				$scope.listOfMovies=$scope.generateRelativeUrls(response.data);
 			})
 		}
+		else if(type=="RATING"){
+			var url="/movieIndex/getTopRecommendedMovies";
+			$http.get(url,{headers:{'Content-Type': 'application/json'}})
+			.then(function(response){
+				$scope.listOfMovies=$scope.generateRelativeUrls(response.data);
+				var myEl = angular.element( document.querySelector( '#id_TOP_RATED' ) );
+				myEl.addClass('active');	
+			})
+		}
+		else if(type=='RECOMMENDATIONS'){
+			var url="/movieIndex/getRecommendedMovies/"+$scope.username
+			$http.get(url,{headers:{'Content-Type': 'application/json'}})
+			.then(function(response){
+				$scope.listOfMovies=$scope.generateRelativeUrls(response.data);
+				var myEl = angular.element( document.querySelector( '#id_RECOMMENDED' ) );
+				myEl.addClass('active');	
+			})
+		}
 
 	}
 	

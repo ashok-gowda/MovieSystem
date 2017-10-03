@@ -2,13 +2,13 @@ package dao.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 import javax.sql.DataSource;
 import model.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import dao.IMovieDao;
@@ -359,6 +359,45 @@ public class MovieDaoImpl implements IMovieDao {
 		}
 		return listOfMovies;
 		
+	}
+
+
+
+	@Override
+	public List<Integer> getDistinctUsersWhoHaveCommented() {
+		List<Integer> listOfUserIds=new ArrayList<Integer>();
+		String sql="Select DISTINCT(user_id) from movie_ratings";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql);
+		for(Map<String,Object>row:rows) {
+			listOfUserIds.add((Integer)row.get("user_id"));
+		}
+		return listOfUserIds;
+	}
+
+
+
+	@Override
+	public Map<Integer, Integer> getMappingOfMoviesCommentedWithRatingsForUser(String userId) {
+		Map<Integer,Integer> mapOfMoviesCommentedWithRatingsForUsers=new HashMap<Integer,Integer>();
+		String sql="Select movie_id,rating from movie_ratings where user_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		List<Map<String,Object>> rows=template.queryForList(sql,userId);
+		for(Map<String,Object>row:rows) {
+			mapOfMoviesCommentedWithRatingsForUsers.put((Integer)row.get("movie_id"),(Integer)row.get("rating"));
+		}
+		return mapOfMoviesCommentedWithRatingsForUsers;
+	}
+
+
+
+	@Override
+	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds) {
+		NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(datasource);
+		String sql="Select * from movie where id IN ( :ids)";
+		Map idsMap = Collections.singletonMap("ids", listOfIds);
+		List<Map<String,Object>> rows=jdbcTemplate.queryForList(sql,idsMap);
+		return getListOfMoviesFromRows(rows);
 	}
 
 

@@ -100,7 +100,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserFromUsername(String username) {
 		jdbcTemplate=new JdbcTemplate(datasource);
-		String sql="Select * from users where username=?";
+		String sql="Select * from users where username LIKE ?";
+		username="%"+username+"%";
 		List<Map<String,Object>> rows=jdbcTemplate.queryForList(sql,new Object[] {username});
 		User user=new User();
 		user.setId((Integer)rows.get(0).get("id"));

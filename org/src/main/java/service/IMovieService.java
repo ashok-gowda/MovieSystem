@@ -2,7 +2,7 @@ package service;
 
 import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
 
 import model.Movie;
 import model.MovieWithComments;
@@ -35,5 +35,13 @@ public interface IMovieService {
 	public void updateMovie(Movie movie,String movieId);
 	
 	public List<Movie> getListOfTopRatedMovies();
+	
+	public List<Integer> getDistinctUsersWhoHaveCommented();
+	
+	public Map<Integer,Integer> getMappingOfMoviesCommentedWithRatingsForUser(String userId);
+	
+	public List<Movie> getRecommendedMovies(String username);
+	
+	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds);
 
 }

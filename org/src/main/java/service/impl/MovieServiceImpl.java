@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,23 @@ import dao.IMovieDao;
 import model.Comment;
 import model.Movie;
 import model.MovieWithComments;
+import model.RatingModel;
+import model.User;
 import service.IMovieService;
+import service.IRecommendationService;
+import service.IUserService;
 
 @Service("MovieServiceImpl")
 public class MovieServiceImpl implements IMovieService {
 	
 	@Autowired
 	IMovieDao movieDao;
+	
+	@Autowired
+	IRecommendationService recommendationService;
+	
+	@Autowired
+	IUserService userService;
 
 	@Override
 	public List<Movie> getListOfMoviesByGenre(String genre) {
@@ -152,8 +164,41 @@ public class MovieServiceImpl implements IMovieService {
 		return movieDao.getListOfTopRatedMovies();
 	}
 
-	
+	@Override
+	public List<Integer> getDistinctUsersWhoHaveCommented() {
+		return movieDao.getDistinctUsersWhoHaveCommented();
+	}
 
+	@Override
+	public Map<Integer, Integer> getMappingOfMoviesCommentedWithRatingsForUser(String userId) {
+		return movieDao.getMappingOfMoviesCommentedWithRatingsForUser(userId);
+	}
+
+	
+	public List<Movie> getRecommendedMovies(String username){
+		User user=userService.getUserFromUsername(username);
+		 if(!recommendationService.checkIfUserIdIsPresent(user.getId())) {
+			 return getListOfTopRatedMovies();
+		 }
+		 else {
+			 Integer similarUser=recommendationService.getSimilarUserToUserId(user.getId());
+			 Map<Integer,Integer> mapOfUserRatings=getMappingOfMoviesCommentedWithRatingsForUser(String.valueOf(user.getId()));
+			 Map<Integer,Integer> mapOfSimilarUserRatings=getMappingOfMoviesCommentedWithRatingsForUser(String.valueOf(similarUser));
+			List<Integer> listOfMoviesNotSeenByUserAndHighlyRatedBySimilarUser=new ArrayList<Integer>();
+			 for(Integer movieId:mapOfSimilarUserRatings.keySet()) {
+					if(mapOfUserRatings.get(movieId)==null && mapOfSimilarUserRatings.get(movieId)>=3) {
+						listOfMoviesNotSeenByUserAndHighlyRatedBySimilarUser.add(movieId);
+					}
+				}
+			 return getMoviesByListOfIds(listOfMoviesNotSeenByUserAndHighlyRatedBySimilarUser);
+			 
+		 }
+	}
+
+	@Override
+	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds) {
+		return movieDao.getMoviesByListOfIds(listOfIds);
+	}
 	
 	
 	

@@ -81,5 +81,16 @@ public class MovieIndexController {
 		}
 		return null;
 	}
+	
+	
+	@RequestMapping(value="/getRecommendedMovies/{username}",method=RequestMethod.GET)
+	public @ResponseBody List<Movie> getRecommendededMovies(@PathVariable String username){
+		try {
+			return movieService.getRecommendedMovies(username);
+		}
+		catch(Exception e) {
+		}
+		return null;
+	}
 
 }

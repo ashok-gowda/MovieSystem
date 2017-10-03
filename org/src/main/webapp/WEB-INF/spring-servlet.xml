@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-   <context:component-scan base-package="controller,dao,model,service,authenciator" />
+   <context:component-scan base-package="controller,dao,model,service,authenciator,jobs" />
 
     <bean id="viewResolver"
     	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -21,6 +21,9 @@
             <value>.jsp</value>
         </property>
     </bean>
+    
+   
+    
     
     <bean id="dataSource"
          class="org.springframework.jdbc.datasource.DriverManagerDataSource">

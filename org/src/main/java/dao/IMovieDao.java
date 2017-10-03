@@ -2,6 +2,7 @@ package dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import model.Comment;
 
@@ -56,5 +57,11 @@ public interface IMovieDao {
 	public void deleteAssociationsOfAMovieWithAnActor(String actorId);
 	
 	public List<Movie> getListOfTopRatedMovies();
+	
+	public List<Integer> getDistinctUsersWhoHaveCommented();
+	
+	public Map<Integer,Integer> getMappingOfMoviesCommentedWithRatingsForUser(String userId);
+	
+	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds);
 
 }

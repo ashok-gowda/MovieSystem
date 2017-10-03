@@ -21,7 +21,7 @@
     </div>
     <ul class="nav navbar-nav">
     	<li id="id_TOP_RATED"><a href="#" ng-click="value=getMovies('TOP_RATED','RATING')">Top Rated Movies</a></li>
-    	<li><a href="#" ng-click="value=getMovies('RECOMMENDED','RECOMMENDATIONS')">Your Recommended Movies</a></li>
+    	<li id="id_RECOMMENDED"><a href="#" ng-click="value=getMovies('RECOMMENDED','RECOMMENDATIONS')">Your Recommended Movies</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movies By Genre
         <span class="caret"></span></a>
