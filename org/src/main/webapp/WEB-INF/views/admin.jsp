@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-  <head>  
+  <head> 
+  <%@ page isELIgnored="false" %> 
     <title>Admin</title>  
     <style>
       .title.ng-valid {
@@ -78,8 +79,27 @@
       <script src="/resources/js/adminpage_service.js"></script>
       <script src="/resources/js/adminpage_controller.js"></script>
   </head>
-  <body ng-app="myApp" class="ng-cloak">
-      <div class="generic-container" ng-controller="MovieController as ctrl">
+  <body ng-app="myApp" class="ng-cloak" ng-controller="MovieController as ctrl" ng-init="ctrl.initValues('${username}')">
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+  <div class="row">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Admin Page</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active" ng-click="ctrl.home()"><a class="navbar-brand" href="#">Home</a></li>
+      <li class="active" ng-click="ctrl.logout()">
+      <a class="navbar-brand" href="#">
+      Log Out
+      </a>
+      </li>
+      </ul>
+    </ul>
+  </div>
+  </div>
+</nav>
+  
+      <div class="generic-container">
           <div class="panel panel-default">
               <div class="panel-heading"><span class="lead">Movie Registration Form </span></div>
               <div class="formcontainer">

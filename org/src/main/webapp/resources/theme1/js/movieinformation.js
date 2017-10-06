@@ -19,6 +19,7 @@ app.controller('myController', function($scope,$http,$timeout) {
 			$scope.genres=$scope.data.genres.join()
 			$scope.actorsInvolved=$scope.data.actorsInvolved.join()
 			$scope.lang=$scope.data.movie.language
+			$scope.customerRating=$scope.data.rating
 			var d=new Date($scope.data.movie.releaseDate)
 			var curr_date = d.getDate();
 		    var curr_month = d.getMonth() + 1; //Months are zero based

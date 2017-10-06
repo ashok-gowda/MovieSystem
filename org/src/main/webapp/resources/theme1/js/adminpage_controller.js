@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp').controller('MovieController', ['$scope','$route', 'MovieService', function($scope,$route, MovieService) {
+angular.module('myApp').controller('MovieController', ['$scope','$route','$http','$window','MovieService', function($scope,$route,$http,$window, MovieService) {
     var self = this;
     self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:'',releaseDateInString:''};
     self.movies=[];
@@ -9,7 +9,6 @@ angular.module('myApp').controller('MovieController', ['$scope','$route', 'Movie
     self.edit = edit;
     self.remove = remove;
     self.reset = reset;
-    
 
     fetchAllMovies();
 
@@ -33,7 +32,7 @@ angular.module('myApp').controller('MovieController', ['$scope','$route', 'Movie
                 console.error('Error while creating Movies');
             }
         );
-        $route.reload();
+        $window.location.reload();
     }
 
     function updateMovie(movie, id){
@@ -44,7 +43,7 @@ angular.module('myApp').controller('MovieController', ['$scope','$route', 'Movie
                 console.error('Error while updating Movie');
             }
         );
-        $route.reload();
+        $window.location.reload();
     }
 
     function deleteMovie(id){
@@ -55,7 +54,7 @@ angular.module('myApp').controller('MovieController', ['$scope','$route', 'Movie
                 console.error('Error while deleting Movie');
             }
         );
-        $route.reload();
+        $window.location.reload();
     }
 
     function submit() {
@@ -92,5 +91,32 @@ angular.module('myApp').controller('MovieController', ['$scope','$route', 'Movie
         self.movie={id:null,title:"",rated:"",releaseDate:null,runtime:'',language:'',poster:'',description:'',actorString:'',genreString:'',releaseDateInString:''};
         $scope.myForm.$setPristine(); //reset Form
     }
-
+    
+    
+    self.logout=function(){
+		var url="/user/logout";
+		var data={
+			"username":$scope.username	
+		}
+		$http.post(url,JSON.stringify(data))
+		.then(function(response){
+			var messageData=response.data
+			if(messageData.statusCode=="200"){
+				window.location="/user/"
+			}
+		}, function errorCallback(response) {
+		    console.log(response)
+		  });
+		
+		}
+	
+	self.home=function(){
+		window.location="/movieIndex/"+$scope.username
+	}
+	
+	self.initValues=function(u){
+		console.log("Function clicked")
+		$scope.username=u
+		console.log($scope.username)
+	}
 }]);

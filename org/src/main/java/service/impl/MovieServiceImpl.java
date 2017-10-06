@@ -79,6 +79,7 @@ public class MovieServiceImpl implements IMovieService {
 		MovieWithComments movieInformation=new MovieWithComments(movie, listOfComments);
 		movieInformation.setGenres(movieDao.getGenresOfMovieById(movieId));
 		movieInformation.setActorsInvolved(movieDao.getActorsOfMovieByMovieId(movieId));
+		movieInformation.setRating(movieDao.getRatingByUser(movieId));
 		return movieInformation;
 	}
 

@@ -17,6 +17,7 @@ public class RecommendationDaoImpl implements IRecommendationDao {
 	@Override
 	public void saveOrUpdateMostSimilarUser(Integer user1, Integer mostSimilarUser) {
 		Integer userId=getIdIfExistsInSimilarityTable(user1);
+		System.out.println(user1+""+mostSimilarUser);
 		if(userId==null) {
 			String sql="Insert into user_similarity(user_id,similar_user_id) VALUES (?,?)";
 			JdbcTemplate jdbcTemplate=new JdbcTemplate(datasource);

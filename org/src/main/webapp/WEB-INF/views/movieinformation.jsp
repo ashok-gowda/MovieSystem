@@ -47,6 +47,7 @@
           		<h2>Actors- {{actorsInvolved}}</h2><br/>
           		<h2>Language -{{lang}}</h2><br/>
           		<h2>Year Released- {{yearReleased}}</h2><br/>
+          		<h2> Customer Rating-{{customerRating}}</h2><br/>
         	</div>
 		</div>
 	</div>

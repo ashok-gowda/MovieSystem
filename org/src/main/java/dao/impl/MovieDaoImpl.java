@@ -340,8 +340,8 @@ public class MovieDaoImpl implements IMovieDao {
 
 	@Override
 	public List<Movie> getListOfTopRatedMovies() {
-		String sql="SELECT * from theatre.movie as a join (" + 
-				"Select AVG(rating)as average_rating,movie_id from theatre.movie_ratings group by movie_id) as b on b.movie_id=a.id order by b.average_rating DESC";
+		String sql="SELECT * from movie as a join (" + 
+				"Select AVG(rating)as average_rating,movie_id from movie_ratings group by movie_id) as b on b.movie_id=a.id order by b.average_rating DESC, b.movie_id DESC";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		List<Map<String,Object>> rows=template.queryForList(sql);
 		List<Movie> listOfMovies=new ArrayList<Movie>();
@@ -398,6 +398,22 @@ public class MovieDaoImpl implements IMovieDao {
 		Map idsMap = Collections.singletonMap("ids", listOfIds);
 		List<Map<String,Object>> rows=jdbcTemplate.queryForList(sql,idsMap);
 		return getListOfMoviesFromRows(rows);
+	}
+
+
+
+	@Override
+	public Integer getRatingByUser(String movieId) {
+		Integer rating=0;
+		try {
+			String sql="Select avg(rating) from movie_ratings where movie_id=?";
+			JdbcTemplate template=new JdbcTemplate(datasource);
+			rating=template.queryForObject(sql,new Object[] {movieId},Integer.class);
+		}
+		catch(Exception e) {
+			
+		}
+		return rating;
 	}
 
 

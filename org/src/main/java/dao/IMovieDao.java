@@ -63,5 +63,7 @@ public interface IMovieDao {
 	public Map<Integer,Integer> getMappingOfMoviesCommentedWithRatingsForUser(String userId);
 	
 	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds);
+	
+	public Integer getRatingByUser(String movieId);
 
 }

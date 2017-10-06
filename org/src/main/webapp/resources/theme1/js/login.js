@@ -25,7 +25,7 @@ $scope.validateLogin=function(){
 					var dataMessage=response.data
 					console.log(dataMessage)
 					if(dataMessage.isAdmin==true){
-						var redirectUrl="/admin/adminPanel"
+						var redirectUrl="/admin/adminPanel/"+$scope.username
 						window.location=redirectUrl
 					}
 					else{

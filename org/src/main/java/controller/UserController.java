@@ -64,7 +64,8 @@ public class UserController {
 			}
 		}
 		}
-		catch(Exception e) {
+		catch(Throwable e) {
+			System.out.println(e.getMessage());
 			return new ResponseMessage("500","Internal Server Error");
 		}
 	}

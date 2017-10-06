@@ -13,6 +13,8 @@ public class MovieWithComments {
 	
 	int statusCode;
 	
+	int rating;
+	
 	String statusMessage;
 
 	public MovieWithComments(Movie movie, List<Comment> listOfComments) {
@@ -72,6 +74,16 @@ public class MovieWithComments {
 
 	public void setStatusMessage(String statusMessage) {
 		this.statusMessage = statusMessage;
+	}
+	
+	
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	@Override
