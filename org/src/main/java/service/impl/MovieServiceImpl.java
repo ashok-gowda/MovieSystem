@@ -125,16 +125,7 @@ public class MovieServiceImpl implements IMovieService {
 	@Override
 	public List<Movie> fetchAllMovies() {
 		List<Movie> listOfMovies=movieDao.getListOfMoviesByReleaseRange(new LocalDate(1900,1,1).toDate(), new Date());
-		List<Movie> resultSetOfMovies=new ArrayList<Movie>();
-		for(int i=0;i<listOfMovies.size();i++) {
-			Movie movie=listOfMovies.get(i);
-			List<String> genres=movieDao.getGenresOfMovieById(String.valueOf(movie.getId()));
-			List<String> actors=movieDao.getActorsOfMovieByMovieId(String.valueOf(movie.getId()));
-			movie.setGenreString(String.join(",", genres));
-			movie.setActorString(String.join(",", actors));
-			resultSetOfMovies.add(movie);
-		}
-		return resultSetOfMovies;
+		return listOfMovies;
 	}
 
 	@Override
@@ -201,8 +192,23 @@ public class MovieServiceImpl implements IMovieService {
 		return movieDao.getMoviesByListOfIds(listOfIds);
 	}
 	
-	
-	
+	@Override
+	public Movie getMovieForEditInformation(String movieId) {
+		Movie movie=getMovieInformationById(movieId);
+		List<String> genres=movieDao.getGenresOfMovieById(String.valueOf(movie.getId()));
+		List<String> actors=movieDao.getActorsOfMovieByMovieId(String.valueOf(movie.getId()));
+		movie.setGenreString(String.join(",", genres));
+		movie.setActorString(String.join(",", actors));
+		SimpleDateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+		try {
+			movie.setReleaseDateInString(df.format(movie.getReleaseDate()));
+		}
+		catch(Exception e ) {
+			
+		}
+		return movie;
+		
+	}
 	
 
 	

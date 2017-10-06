@@ -44,4 +44,6 @@ public interface IMovieService {
 	
 	public List<Movie> getMoviesByListOfIds(List<Integer> listOfIds);
 
+	
+	public Movie getMovieForEditInformation(String movieId) ;
 }

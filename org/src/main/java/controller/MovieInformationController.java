@@ -135,5 +135,17 @@ public class MovieInformationController {
 		}
 		return listOfMovies;
 	}
+	
+	@RequestMapping(value="/getCompleteInformationOfOneMovie",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	public @ResponseBody Movie getCompleteInformationOfOneMovie(@RequestBody Movie movie) {
+		Movie fetchedMovie=null;
+		try {
+			fetchedMovie=movieService.getMovieForEditInformation(String.valueOf(movie.getId()));
+		}
+		catch(Exception e) {
+			
+		}
+		return fetchedMovie;
+	}
 }
 

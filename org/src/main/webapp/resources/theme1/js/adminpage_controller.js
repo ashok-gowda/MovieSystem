@@ -70,12 +70,15 @@ angular.module('myApp').controller('MovieController', ['$scope','$route','$http'
 
     function edit(id){
         console.log('id to be edited', id);
-        for(var i = 0; i < self.movies.length; i++){
-            if(self.movies[i].id === id) {
-                self.movie = angular.copy(self.movies[i]);
-                break;
-            }
+        MovieService.editMovie(id)
+        .then(
+        function(d) {
+            self.movie = d;
+        },
+        function(errResponse){
+            console.error('Error while fetching Movies');
         }
+    );        
     }
 
     function remove(id){

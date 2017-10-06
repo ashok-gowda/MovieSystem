@@ -7,7 +7,8 @@ angular.module('myApp').factory('MovieService', ['$http', '$q', function($http, 
         fetchAllMovies: fetchAllMovies,
         createMovie: createMovie,
         updateMovie:updateMovie,
-        deleteMovie:deleteMovie
+        deleteMovie:deleteMovie,
+        editMovie:editMovie
     };
 
     return factory;
@@ -78,6 +79,26 @@ angular.module('myApp').factory('MovieService', ['$http', '$q', function($http, 
                   	console.log("Movie Deleted")
                   	deferred.resolve(response.data);
                   }
+            },
+            function(errResponse){
+                console.error('Error while deleting Movie');
+                deferred.reject(errResponse);
+            }
+        );
+    	return deferred.promise;
+    }
+    
+    
+    function editMovie(id){
+    	var deferred = $q.defer();
+    	var request={
+    			"id":id
+    	}
+    	var url="/movieInformation/getCompleteInformationOfOneMovie";
+        $http.post("/movieInformation/getCompleteInformationOfOneMovie",JSON.stringify(request))
+            .then(
+            function (response) {
+                  	deferred.resolve(response.data);
             },
             function(errResponse){
                 console.error('Error while deleting Movie');
