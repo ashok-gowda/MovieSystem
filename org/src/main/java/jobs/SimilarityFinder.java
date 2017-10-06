@@ -16,7 +16,7 @@ public class SimilarityFinder{
 	@Autowired
 	IRecommendationService recommendationService;
 	
-	@Scheduled(cron="0 0 6 * * *")
+	@Scheduled(cron="0 0 0 25 12 ?")
 	public void determineSimilarityBetweenPeople() {
 		List<Integer> listOfUsers=movieService.getDistinctUsersWhoHaveCommented();
 		for(int i=0;i<listOfUsers.size();i++) {

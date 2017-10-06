@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <link rel="stylesheet" href="css/ngDatePicker.css"/>
+ <link rel="stylesheet" href="css/bootstrap-datepicker.css"/>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"> </script>    
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="js/billinginformation.js"></script>
+ <script src="js/bootstrap-datepicker.js"></script>
+ </head>
+ 	<body ng-app="myApp" ng-controller="myController">
+ 	 <nav class="navbar navbar-default">
+  		<div class="container-fluid">
+  			<div class="row">
+    			<div class="navbar-header">
+      				<a class="navbar-brand" href="#">{{websiteName}}</a>
+    			</div>
+    			<ul class="nav navbar-nav">
+      				<li class="active"><a href="#">Home</a></li>
+      				<li><a href="#">Seating and Billing </a></li>
+      				<li class="active">
+      				<a href="javascript:close_window();">Log Out</a>
+      				</li>
+      			</ul>
+    			</ul>
+  			</div>
+  		</div>
+	</nav>
+ 	<div class="container">
+ 		<div class="row">
+ 			<div class="col-sm-4"></div>
+ 			<div class="col-sm-4">
+      			<div class="input-group date" data-provide="datepicker" id="datetime1">
+    				<input type="text" class="form-control" value="{{dateSelected | date:' MM-dd-yyyy'}}"/>
+    				<div class="input-group-addon">
+        				<span class="glyphicon glyphicon-th"></span>
+    				</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+ 	</body>
+ </html>

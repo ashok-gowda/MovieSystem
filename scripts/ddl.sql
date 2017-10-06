@@ -14,6 +14,7 @@ ALTER TABLE movie DROP COLUMN Poster;
 ALTER TABLE movie ADD COLUMN poster TEXT;
 ALTER TABLE movie ADD COLUMN description TEXT;
 ALTER TABLE movie ADD COLUMN releaseDate datetime;
+ALTER TABLE movie ADD COLUMN deleted boolean default false;
 
 CREATE TABLE genre(
 	id INT(10) NOT NULL AUTO_INCREMENT,
@@ -72,4 +73,17 @@ CREATE TABLE movie_ratings(
     Primary key(id),
     foreign key(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE);
+    
+    
+CREATE TABLE user_similarity(
+    id INT(10) NOT NULL AUTO_INCREMENT,
+    user_id INT(10) NOT NULL,
+    similar_user_id INT(10) NOT NULL,
+    UNIQUE(id),
+    foreign key(user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key(similar_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY key (user_id)
+    );
+       
+    
    
