@@ -36,6 +36,8 @@
 		<property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
     <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
     <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+    <property name="testOnBorrow" value="true"/>
+    <property name="validationQuery" value="SELECT 1"/>
 	</bean>
     
     <mvc:annotation-driven/>
