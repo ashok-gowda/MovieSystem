@@ -76,7 +76,7 @@ public class UserController {
 		ResponseMessage responseMessage=null;
 		try {
 			request.getSession().setAttribute("LOGGEDIN_USER",null);
-			responseMessage=new ResponseMessage("200","Authenciated");
+			responseMessage=new ResponseMessage("200","Logged Out");
 		}
 		catch(Exception e) {
 			responseMessage=new ResponseMessage("500","Internal Server Error");
@@ -109,7 +109,14 @@ public class UserController {
 
 	@RequestMapping(value="/getDetailsOfUsers",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	public @ResponseBody User getDetailsOfUser(@RequestBody UserRequest request) {
-		return userService.getUserFromUsername(request.getUsername());		
+		User user=null;
+		try {
+		user=userService.getUserFromUsername(request.getUsername());
+		}
+		catch(Exception e) {
+			
+		}
+		return user;
 	}
 	
 }

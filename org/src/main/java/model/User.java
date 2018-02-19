@@ -2,25 +2,25 @@ package model;
 
 public class User {
 	
-	Integer id;
+	private Integer id;
 	
-	String username;
+	private String username;
 	
-	String password;
+	private String password;
 	
-	String email;
+	private String email;
 	
-	String phone;
+	private String phone;
 	
-	String address;
+	private String address;
 	
-	String city;
+	private String city;
 	
-	String zip;
+	private String zip;
 	
-	String country;
+	private String country;
 	
-	Boolean isAdmin;
+	private Boolean isAdmin;
 	
 	public User() {
 		

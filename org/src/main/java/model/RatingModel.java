@@ -2,10 +2,10 @@ package model;
 
 public class RatingModel {
 
-	Integer ratingOfUser1;
+	private Integer ratingOfUser1;
 	
 	
-	Integer ratingOfUser2;
+	private Integer ratingOfUser2;
 	
 	public RatingModel() {
 		

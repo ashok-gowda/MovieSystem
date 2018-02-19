@@ -29,68 +29,74 @@ public class MovieIndexController {
 	
 	@RequestMapping(value="/find/genre/{genre}",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getMoviesByGenre(@PathVariable String genre){
+		List<Movie> listOfMovies=null;
 		try {
-		return movieService.getListOfMoviesByGenre(genre);
+		listOfMovies=movieService.getListOfMoviesByGenre(genre);
 		}
 		catch(Exception e) {
 			System.out.println(e.getStackTrace());
 		}
-		return null;
+		return listOfMovies;
 	}
 	
 	@RequestMapping(value="/find/language/{language}",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getListOfMoviesByLanguage(@PathVariable String language){
+		List<Movie> listOfMovies=null;
 		try {
-			return movieService.getListOfMoviesByLanguage(language);
+			listOfMovies=movieService.getListOfMoviesByLanguage(language);
 			}
 			catch(Exception e) {
 				System.out.println(e.getStackTrace());
 			}
-			return null;
+			return listOfMovies;
 	}
 	
 	@RequestMapping(value="/find/yearRange/{category}",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getListOfMoviesByReleaseRange(@PathVariable String category){
+		List<Movie> listOfMovies=null;
 		try {
-			return movieService.getListOfMoviesByReleaseRange(category);
+			listOfMovies=movieService.getListOfMoviesByReleaseRange(category);
 			}
 			catch(Exception e) {
 				System.out.println(e.getStackTrace());
 			}
-			return null;
+			return listOfMovies;
 	}
 	
 	@RequestMapping(value="/search/{searchTerm}",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getListOfMoviesBySearchTerm(@PathVariable String searchTerm){
+		List<Movie> listOfMovies=null;
 		try {
-			return movieService.getListOfMoviesBySearchTerm(searchTerm);
+			listOfMovies=movieService.getListOfMoviesBySearchTerm(searchTerm);
 			}
 			catch(Exception e) {
 				System.out.println(e.getStackTrace());
 			}
-			return null;
+			return listOfMovies;
 	}
 	
 	@RequestMapping(value="/getTopRecommendedMovies",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getTopRecommendedMovies(){
+		List<Movie> listOfMovies=null;
 		try {
-			return movieService.getListOfTopRatedMovies();
+			listOfMovies=movieService.getListOfTopRatedMovies();
 		}
 		catch(Exception e) {
 			
 		}
-		return null;
+		return listOfMovies;
 	}
 	
 	
 	@RequestMapping(value="/getRecommendedMovies/{username}",method=RequestMethod.GET)
 	public @ResponseBody List<Movie> getRecommendededMovies(@PathVariable String username){
+		List<Movie> listOfMovies=null;
 		try {
-			return movieService.getRecommendedMovies(username);
+			listOfMovies=movieService.getRecommendedMovies(username);
 		}
 		catch(Exception e) {
 		}
-		return null;
+		return listOfMovies;
 	}
 
 }

@@ -2,9 +2,9 @@ package model;
 
 public class ResponseMessage {
 	
-	String statusCode;
+	private String statusCode;
 	
-	String message;
+	private String message;
 	
 	
 	

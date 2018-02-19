@@ -2,11 +2,11 @@ package model;
 
 public class Comment {
 	
-	String username;
+	private String username;
 	
-	String comment;
+	private String comment;
 	
-	Integer rating;
+	private Integer rating;
 	
 	public Comment() {
 		

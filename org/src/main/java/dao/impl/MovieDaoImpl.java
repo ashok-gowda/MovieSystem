@@ -262,15 +262,10 @@ public class MovieDaoImpl implements IMovieDao {
 	@Override
 	public Integer getGenreIdIfPresent(String genreName) {
 		Integer genreId=null;
-		try {
 		String sql="Select id from genre where name LIKE ? order by id DESC limit 1";
 		genreName="%"+genreName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		genreId=template.queryForObject(sql,new Object[] {genreName},Integer.class);
-		}
-		catch(Exception e) {
-			return null;
-		}
 		return genreId;
 		
 	}
@@ -280,15 +275,10 @@ public class MovieDaoImpl implements IMovieDao {
 	@Override
 	public Integer getActorIdIfPresent(String actorName) {
 		Integer actorId=null;
-		try {
 		String sql="Select id  from actor where name LIKE ? order by id DESC limit 1";
 		actorName="%"+actorName+"%";
 		JdbcTemplate template=new JdbcTemplate(datasource);
 		actorId=template.queryForObject(sql,new Object[] {actorName},Integer.class);
-		}
-		catch(Exception e) {
-			return null;
-		}
 		return actorId;		
 	}
 
@@ -405,14 +395,9 @@ public class MovieDaoImpl implements IMovieDao {
 	@Override
 	public Integer getRatingByUser(String movieId) {
 		Integer rating=0;
-		try {
-			String sql="Select avg(rating) from movie_ratings where movie_id=?";
-			JdbcTemplate template=new JdbcTemplate(datasource);
-			rating=template.queryForObject(sql,new Object[] {movieId},Integer.class);
-		}
-		catch(Exception e) {
-			
-		}
+		String sql="Select avg(rating) from movie_ratings where movie_id=?";
+		JdbcTemplate template=new JdbcTemplate(datasource);
+		rating=template.queryForObject(sql,new Object[] {movieId},Integer.class);
 		return rating;
 	}
 

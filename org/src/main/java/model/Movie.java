@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Movie {
 
-	Integer id;
+	private Integer id;
 	
-	String title;
+	private String title;
 	
-	String rated;
+	private String rated;
 	
 	@JsonProperty(required=false)
 	Date releaseDate;
 	
-	String runtime;
+	private String runtime;
 	
-	String language;
+	private String language;
 	
-	String poster;
+	private String poster;
 	
-	String description;
+	private String description;
 	
-	String actorString;
+	private String actorString;
 	
-	String genreString;
+	private String genreString;
 	
-	String releaseDateInString;
+	private String releaseDateInString;
 	
 	public Movie() {
 		

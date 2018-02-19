@@ -2,21 +2,21 @@ package model;
 
 public class RegisterRequest {
 	
-	String email;
+	private String email;
 	
-	String username;
+	private String username;
 	
-	String password;
+	private String password;
 	
-	String address;
+	private String address;
 	
-	String city;
+	private String city;
 	
-	String country;
+	private String country;
 	
-	String zip;
+	private String zip;
 	
-	String phoneNumber;
+	private String phoneNumber;
 	
 	RegisterRequest(){
 		

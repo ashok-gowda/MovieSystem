@@ -2,7 +2,7 @@ package model;
 
 public class UserRequest {
 	
-	String username;
+	private String username;
 
 	public UserRequest() {
 		

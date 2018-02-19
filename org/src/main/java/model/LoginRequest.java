@@ -2,9 +2,9 @@ package model;
 
 public class LoginRequest {
 	
-	String username;
+	private String username;
 	
-	String password;
+	private String password;
 	
 	public LoginRequest() {
 		

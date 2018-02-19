@@ -32,16 +32,10 @@ public class RecommendationDaoImpl implements IRecommendationDao {
 	
 	
 	public Integer getIdIfExistsInSimilarityTable(Integer user1) {
-		try {
 			String sql="Select id from user_similarity where user_id=?";
 			JdbcTemplate jdbcTemplate=new JdbcTemplate(datasource);
 			Integer userId=jdbcTemplate.queryForObject(sql,new Object[] {String.valueOf(user1)},Integer.class);
 			return userId;
-		}
-		catch(Exception e) {
-			
-		}
-		return null;
 	}
 
 
@@ -59,16 +53,10 @@ public class RecommendationDaoImpl implements IRecommendationDao {
 
 	@Override
 	public Integer getSimilarUserToUserId(Integer user1) {
-		try {
 			String sql="Select similar_user_id from user_similarity where user_id=?";
 			JdbcTemplate jdbcTemplate=new JdbcTemplate(datasource);
 			Integer userId=jdbcTemplate.queryForObject(sql,new Object[] {String.valueOf(user1)},Integer.class);
 			return userId;
-		}
-		catch(Exception e) {
-			
-		}
-		return null;
 	}
 
 }

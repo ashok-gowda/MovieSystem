@@ -22,22 +22,16 @@
         </property>
     </bean>
     
-   <bean class="java.net.URI" id="dbUrl">
-    <constructor-arg value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
-</bean>
    
     
     
     <bean id="dataSource"
-          class="org.apache.commons.dbcp.BasicDataSource"
-  destroy-method="close">
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
-    <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-    <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-    <property name="testOnBorrow" value="true"/>
-    <property name="validationQuery" value="SELECT 1"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/theatre2" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 	</bean>
     
     <mvc:annotation-driven/>
@@ -53,7 +47,6 @@
     
 
 </beans>
-
 
 
 

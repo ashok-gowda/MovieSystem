@@ -42,7 +42,14 @@ public class MovieInformationController {
 	
 	@RequestMapping(value="/getInformation/{movieId}",method=RequestMethod.GET)
 	public @ResponseBody Movie getMovieInformationById(@PathVariable String movieId) {
-		   return movieService.getMovieInformationById(movieId);
+		   Movie movie=null;
+		   try {
+		   movie=movieService.getMovieInformationById(movieId);
+		   }
+		   catch(Exception e) {
+			   
+		   }
+		   return movie;
 	}
 	
 	@RequestMapping(value="/getMovieInformationWithComments/{movieId}",method=RequestMethod.GET)
@@ -101,7 +108,7 @@ public class MovieInformationController {
 		ResponseMessage response=null;
 		try {
 			movieService.deleteMovie(String.valueOf(movie.getId()));;
-			response=new ResponseMessage("200","Movie inserted");
+			response=new ResponseMessage("200","Movie deleted");
 		}
 		catch(Exception e) {
 			response=new ResponseMessage("500","Exception");
@@ -116,7 +123,7 @@ public class MovieInformationController {
 			SimpleDateFormat df=new SimpleDateFormat("MM/dd/yyyy");
 			movie.setReleaseDate(df.parse(movie.getReleaseDateInString()));
 			movieService.updateMovie(movie,String.valueOf(movie.getId()));
-			response=new ResponseMessage("200","Movie inserted");
+			response=new ResponseMessage("200","Movie updated");
 		}
 		catch(Exception e) {
 			response=new ResponseMessage("500","Exception");

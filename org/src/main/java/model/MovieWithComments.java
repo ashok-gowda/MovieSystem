@@ -3,17 +3,17 @@ import java.util.*;
 
 public class MovieWithComments {
 	
-	Movie movie;
+	private Movie movie;
 	
-	List<Comment> listOfComments;
+	private List<Comment> listOfComments;
 	
-	List<String> genres;
+	private List<String> genres;
 	
-	List<String> actorsInvolved;
+	private List<String> actorsInvolved;
 	
-	int statusCode;
+	private int statusCode;
 	
-	int rating;
+	private int rating;
 	
 	String statusMessage;
 

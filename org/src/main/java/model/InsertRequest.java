@@ -1,13 +1,13 @@
 package model;
 
 public class InsertRequest {
-	String movieId;
+	private String movieId;
 	
-	String username;
+	private String username;
 	
-	String  comment;
+	private String  comment;
 	
-	String rating;
+	private String rating;
 	
 	InsertRequest(){
 		
